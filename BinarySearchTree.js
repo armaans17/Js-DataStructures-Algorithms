@@ -11,7 +11,7 @@ class BinarySearchTree {
     this.head = null;
   }
 
-  add(node) {
+  insert(node) {
     const newNode = new Node(node);
 
     if (!this.head) {
@@ -37,11 +37,35 @@ class BinarySearchTree {
       }
     }
   }
+
+  lookup(node) {
+    if (!this.head) return false;
+
+    let currentNode = this.head;
+    while (currentNode) {
+      if (currentNode.value === node) {
+        return true;
+      } else if (currentNode.value < node) {
+        currentNode = currentNode.right;
+      } else {
+        currentNode = currentNode.left;
+      }
+    }
+    return false;
+  }
+
+  remove() {}
 }
 
 const Tree1 = new BinarySearchTree();
-Tree1.add(10);
-Tree1.add(9);
-Tree1.add(5);
-Tree1.add(14);
-console.log(Tree1);
+Tree1.insert(10);
+Tree1.insert(9);
+Tree1.insert(5);
+Tree1.insert(14);
+//       10
+//     /    \
+//    9      14
+//   /
+//  5
+Tree1.lookup(11); // false
+Tree1.lookup(14); // true
