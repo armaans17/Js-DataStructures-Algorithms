@@ -32,7 +32,7 @@ class BinarySearchTree {
           currentNode.right = newNode;
           break;
         } else {
-          currentNode.right;
+          currentNode = currentNode.right;
         }
       }
     }
@@ -130,20 +130,97 @@ class BinarySearchTree {
       }
     }
   }
+
+  // Tree Traversal
+
+  // Breadth First Search
+  // Left to Right
+  bfs() {
+    if (!this.root) {
+      return [];
+    }
+    let bfsOrder = [];
+    let queque = [this.root];
+    while (queque.length) {
+      let currentNode = queque.shift();
+      bfsOrder.push(currentNode.value);
+      if (currentNode.left) {
+        queque.push(currentNode.left);
+      }
+      if (currentNode.right) {
+        queque.push(currentNode.right);
+      } else {
+        continue;
+      }
+    }
+
+    return bfsOrder;
+  }
+
+  // Depth First Search
+  dfsPreOrder() {
+    let nodes = [];
+
+    preOrder(this.root);
+    function preOrder(node) {
+      if (!node) {
+        return;
+      }
+      nodes.push(node.value);
+
+      node.left && preOrder(node.left);
+      node.right && preOrder(node.right);
+    }
+    return nodes;
+  }
+
+  dfsInOrder() {
+    let nodes = [];
+
+    (function inOrder(node) {
+      if (!node) {
+        return;
+      }
+
+      inOrder(node.left);
+      nodes.push(node.value);
+      inOrder(node.right);
+    })(this.root);
+    return nodes;
+  }
+
+  dfsPostOrder() {
+    let nodes = [];
+
+    (function postOrder(node) {
+      if (!node) {
+        return;
+      }
+
+      postOrder(node.left);
+      postOrder(node.right);
+      nodes.push(node.value);
+    })(this.root);
+    return nodes;
+  }
 }
 
 const Tree1 = new BinarySearchTree();
 Tree1.insert(10);
-Tree1.insert(9);
+Tree1.insert(8);
 Tree1.insert(5);
 Tree1.insert(14);
+Tree1.insert(9);
+Tree1.insert(18);
 //       10
 //     /    \
-//    9      14
-//   /
-//  5
-Tree1.lookup(11); // false
-Tree1.lookup(14); // true
-console.log(Tree1);
-console.log(Tree1.remove(9));
-console.log(Tree1);
+//    8      14
+//   / \      \
+//  5   9      18
+console.log(Tree1.lookup(11)); // false
+console.log(Tree1.lookup(14)); // true
+
+// console.log(Tree1.remove(9));
+console.log(Tree1.dfsPreOrder()); // [ 10, 8, 5, 9, 14, 18 ]
+console.log(Tree1.dfsInOrder()); // [ 5, 8, 9, 10, 14, 18 ]
+console.log(Tree1.dfsPostOrder()); // [ 5, 9, 8, 18, 14, 10 ]
