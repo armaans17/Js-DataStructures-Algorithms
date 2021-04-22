@@ -1,3 +1,5 @@
+
+//Individual Node
 class Node {
   constructor(node) {
     this.value = node;
@@ -6,6 +8,7 @@ class Node {
   }
 }
 
+//Tree 
 class BinarySearchTree {
   constructor() {
     this.root = null;
